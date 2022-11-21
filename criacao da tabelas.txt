@@ -344,3 +344,111 @@ update barragem_2017 set geom = st_setsrid(st_makepoint(long,lat), 4326)
 
 
 ----------------------------------------------------------------------------------------------------------------------------------
+
+
+create table barragem_2016 (
+codigo_SNISB varchar(100),
+cod_barr_fisc varchar(100),
+num_aut varchar(1000),
+data_publicacao_aut varchar(10000),
+data_valida_aut varchar(10000),
+cnarh_num varchar(1000),
+nome_barr varchar(1000),
+nome_sec varchar(1000),
+alt_acima_funcadacao varchar(10),
+alt_acima_terreno varchar(10),
+capacidade varchar(100),
+tipo_material varchar(100),
+tipo_estrutura varchar(100),
+comprimento varchar(100),
+nome_empr varchar(1000),
+sigla_empr varchar(100),
+cnpj_empr varchar(100),
+cpf_empr varchar(1000),
+endereco_empr varchar(1000),
+email_empr varchar(1000),
+tel_empr varchar(1000),
+tel_alt_empr varchar(1000),
+data_ini_construcao varchar(100),
+data_fim_construcao varchar(100),
+uso_principal varchar(1000),
+uso_complementar varchar(1000),
+classe_residuo varchar(1000),
+curso_dagua_barr_oto varchar(1000),
+bacia_hidro varchar(100),
+reg_hidro_cnrh varchar(100),
+unidade_gestao_rec_hidrico varchar(100),
+lat double precision,
+long double precision,
+datum varchar(100),
+uf varchar(10),
+municipio varchar(1000),
+domínio_durso_dágua varchar(100),
+data_ult_inspecao varchar(100),
+tipo_ult_inspecao varchar(100),
+nivel_perigo_global varchar(100),
+cat_risco varchar(100),
+dano_potencial_assoc varchar(100),
+bar_classe varchar(15),
+possui_pae varchar(15),
+possu_plano_seg varchar(20),
+vazao_projeto varchar(100),
+criterio_vazao_projeto varchar(100),
+extravasor_controle varchar(100),
+tem_projeto_executivo varchar(20),
+tem_projeto_como_construido varchar(20),
+tem_projeto_basico varchar(20),
+tem_projeto_conceitual varchar(20),
+possui_eclusa varchar(20),
+fase_da_vida varchar(100),
+reg_pela_pnsb varchar(100),
+comentarios_e_observacoes varchar(1000),
+orgao_fisc varchar(1000),
+uso_principal_filtrado varchar(1000),
+porte varchar(20),
+faixa_altura varchar(100),
+faixa_volume varchar(100),
+inspecao_periodo_rsb varchar(100),
+classificacao varchar(10),
+classificada varchar(100),
+outorgada varchar(100),
+n varchar(100)
+)
+
+copy barragem_2016 from 'C:\2016.csv' delimiter ';' CSV HEADER
+select addgeometrycolumn('geodata', 'barragem_2016', 'geom', 4326, 'POINT', 2)
+update barragem_2016 set geom = st_setsrid(st_makepoint(long,lat), 4326)
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+create table barragem_2015 (
+nome_barr varchar(1000),
+municipio varchar(1000),
+uf varchar(15),
+uso_principal varchar(1000),
+cat_risco varchar(100),
+dano_potencial_assoc varchar(100),
+nome_empr varchar(1000),
+orgao_fisc varchar(1000),
+cap_hm3 double precision,
+alt_acima_funcadacao varchar(15),
+alt_acima_terreno varchar(15),
+tipo_material varchar(100),
+num_aut varchar(1000),
+data_publicacao_aut varchar(10000),
+data_valida_aut varchar(10000),
+lat double precision,
+long double precision,
+datum varchar(100)
+)
+
+copy barragem_2015 from 'C:\2015.csv' delimiter ';' CSV HEADER
+select addgeometrycolumn('geodata', 'barragem_2015', 'geom', 4326, 'POINT', 2)
+update barragem_2015 set geom = st_setsrid(st_makepoint(long,lat), 4326)
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+
+
