@@ -512,25 +512,43 @@ CREATE TABLE recursos_estaduais (
 copy barragem_2015 from 'C:\estadual.csv' delimiter ';' CSV HEADER
 
 -------------------------------------------------------------------------------------------------------------------------
-
 -- Create vegetacao
 
 CREATE TABLE vegetacao (
   FID VARCHAR(50),
   mslink NUMERIC,
-  mapid NUMERIC,
+  id_mapa NUMERIC,
   cod_leg_ca VARCHAR(50),
   cod_class_ VARCHAR(50),
   dsc_class_ VARCHAR(100),
   dsc_veg_pr VARCHAR(100),
-  val_area_k double precision,
-  val_perime double precision,
-  id1 NUMERIC,                                                                               
+  area double precision,
+  perimetro double precision,
+  id_alt NUMERIC,                                                                               
   geom geometry(MultiPolygon, 4326)
 )
 
 copy vegetacao from 'C:\vegetacao_5000.csv' delimiter ',' CSV HEADER
 
 -------------------------------------------------------------------------------------------------------------------------
+--ERRO NA GEOMETRIA
 
--- Create 
+
+-- Create medicos_por_1000_hab
+
+CREATE TABLE medicos_por_1000_hab (
+  FID VARCHAR(100),
+  gid NUMERIC,
+  uf varchar(50),
+  nome_cidade varchar(100),                                                               
+  ano_censo NUMERIC,
+  populacao_2010 NUMERIC,
+  numero_de_medicos NUMERIC,
+  razao_medicos_por_1000_hab double precision,
+  descricao varchar(1000),
+  legenda varchar(100),
+  classe NUMERIC,  
+  geom geometry(MultiPolygon, 4326)
+)
+
+copy medicos_por_1000_hab from 'C:\vw_razao_medicos_1000_hab.csv' delimiter ',' CSV HEADER
