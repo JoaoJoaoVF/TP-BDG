@@ -513,5 +513,24 @@ copy barragem_2015 from 'C:\estadual.csv' delimiter ';' CSV HEADER
 
 -------------------------------------------------------------------------------------------------------------------------
 
+-- Create vegetacao
 
+CREATE TABLE vegetacao (
+  FID VARCHAR(50),
+  mslink NUMERIC,
+  mapid NUMERIC,
+  cod_leg_ca VARCHAR(50),
+  cod_class_ VARCHAR(50),
+  dsc_class_ VARCHAR(100),
+  dsc_veg_pr VARCHAR(100),
+  val_area_k double precision,
+  val_perime double precision,
+  id1 NUMERIC,                                                                               
+  geom geometry(MultiPolygon, 4326)
+)
 
+copy vegetacao from 'C:\vegetacao_5000.csv' delimiter ',' CSV HEADER
+
+-------------------------------------------------------------------------------------------------------------------------
+
+-- Create 
