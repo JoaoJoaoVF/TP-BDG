@@ -531,24 +531,66 @@ CREATE TABLE vegetacao (
 copy vegetacao from 'C:\vegetacao_5000.csv' delimiter ',' CSV HEADER
 
 -------------------------------------------------------------------------------------------------------------------------
---ERRO NA GEOMETRIA
 
+-- Create terra_indigena
 
--- Create medicos_por_1000_hab
-
-CREATE TABLE medicos_por_1000_hab (
+CREATE TABLE terra_indigena (
   FID VARCHAR(100),
-  gid NUMERIC,
-  uf varchar(50),
-  nome_cidade varchar(100),                                                               
-  ano_censo NUMERIC,
-  populacao_2010 NUMERIC,
-  numero_de_medicos NUMERIC,
-  razao_medicos_por_1000_hab double precision,
-  descricao varchar(1000),
-  legenda varchar(100),
-  classe NUMERIC,  
+  id_objeto NUMERIC, 
+  nome VARCHAR(100), 
+  nome_abreviado VARCHAR(100),
+  geometria_aproximada VARCHAR(10), 
+  perimetro_oficial NUMERIC,
+  area_oficialha double precision,
+  grupo_etnico VARCHAR(100), 
+  data_situacao_juridica  VARCHAR(10), 
+  situacao_juridica  VARCHAR(100), 
+  nome_tribo  VARCHAR(100), 
+  id_produtor NUMERIC,
+  id_elemento_produtor NUMERIC,
+  codigo_funai NUMERIC,
   geom geometry(MultiPolygon, 4326)
 )
 
-copy medicos_por_1000_hab from 'C:\vw_razao_medicos_1000_hab.csv' delimiter ',' CSV HEADER
+copy terra_indigena from 'C:\BC250_2017_Terra_Indigena_A.csv' delimiter ',' CSV HEADER
+
+-------------------------------------------------------------------------------------------------------------------------
+ 
+-- Create clima_do_Brasil
+
+CREATE TABLE clima_do_Brasil (
+  FID VARCHAR(100),
+  mslink NUMERIC,
+  zona VARCHAR(100), 
+  tipo_umidade VARCHAR(100),
+  distribuicao_umidade VARCHAR(100),
+  temperatura VARCHAR(100),
+  descricao_completa VARCHAR(1000),
+  geom geometry(MultiPolygon, 4326)
+)
+
+copy clima_do_Brasil from 'C:\ClimadoBrasil_5000.csv' delimiter ',' CSV HEADER
+
+-------------------------------------------------------------------------------------------------------------------------
+
+-- Create trecho_energia
+
+CREATE TABLE trecho_energia (
+  FID VARCHAR(100),
+  id_objeto NUMERIC, 
+  nome VARCHAR(100), 
+  nome_abreviado VARCHAR(100),
+  geometria_aproximada VARCHAR(10), 
+  emduto VARCHAR(10),
+  tensaoeletrica VARCHAR(10),
+  numcircuitos VARCHAR(10),
+  especie VARCHAR(50),
+  posicaorelativa VARCHAR(50),
+  operacional VARCHAR(10),
+  situacaofisica VARCHAR(50),
+  id_produtor NUMERIC,
+  id_elementoprodutor NUMERIC,
+  geom geometry(MultiPolygon, 4326)
+)
+
+copy trecho_energia from 'C:\BC250_2017_Trecho_Energia_L.csv' delimiter ',' CSV HEADER
