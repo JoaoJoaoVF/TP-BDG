@@ -1,0 +1,170 @@
+SELECT a.*
+FROM geodata.area_densamente_edificada a, geodata.estado e
+WHERE st_contains(e.geom, st_transform(a.geom, 4674))
+AND e.sigla = 'MG'
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+SELECT *
+FROM geodata.barragem b
+WHERE b.uf = 'MG'
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+SELECT *
+FROM (	SELECT *
+		FROM (SELECT *
+				FROM geodata.barragem
+				WHERE dano_potencial_assoc LIKE 'A%' OR dano_potencial_assoc LIKE 'a%'
+			 ) as b
+		WHERE cat_risco LIKE 'A%' OR cat_risco LIKE 'a%'
+		AND dano_potencial_assoc LIKE 'A%' OR dano_potencial_assoc LIKE 'a%') as x
+WHERE x.uf = 'MG'
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+SELECT *
+FROM (	SELECT *
+		FROM (SELECT *
+				FROM geodata.barragem
+				WHERE dano_potencial_assoc LIKE 'A%' OR dano_potencial_assoc LIKE 'a%'
+			 ) as b
+		WHERE cat_risco LIKE 'A%' OR cat_risco LIKE 'a%'
+		AND dano_potencial_assoc LIKE 'A%' OR dano_potencial_assoc LIKE 'a%') as x
+WHERE x.uf = 'MG'
+AND uso_principal LIKE 'Contenção de rejeitos%'
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+SELECT x.*
+FROM (	SELECT *
+		FROM (SELECT *
+				FROM geodata.barragem
+				WHERE dano_potencial_assoc LIKE 'A%' OR dano_potencial_assoc LIKE 'a%'
+			 ) as b
+		WHERE cat_risco LIKE 'A%' OR cat_risco LIKE 'a%'
+		AND dano_potencial_assoc LIKE 'A%' OR dano_potencial_assoc LIKE 'a%') as x,
+		(	SELECT st_union(st_buffer(m.geom::geography, 2500)::geometry) as geom
+	 		FROM geodata.municipio_mg m
+			WHERE m.nm_mun = 'Belo Horizonte') as buf
+WHERE st_contains(buf.geom, x.geom)
+AND x.uf = 'MG'
+AND uso_principal LIKE 'Contenção de rejeitos%'
+AND municipio = 'NOVA LIMA'
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+SELECT *
+FROM geodata.barragem
+WHERE codigo_snisb = '621'
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+SELECT a.*
+FROM geodata.area_densamente_edificada a, geodata.estado e
+WHERE st_contains(e.geom, st_transform(a.geom, 4674))
+AND e.sigla = 'MG'
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+SELECT d.*
+FROM (	SELECT a.*
+		FROM geodata.area_densamente_edificada a, geodata.estado e
+		WHERE st_contains(e.geom, st_transform(a.geom, 4674))
+		AND e.sigla = 'MG') as d,
+		(	SELECT st_union(st_buffer(b.geom::geography, 100000)::geometry) as geom
+					FROM geodata.barragem b
+					WHERE codigo_snisb = '621') as buf
+WHERE st_contains(buf.geom, d.geom)
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+SELECT d.*
+FROM (	SELECT a.*
+		FROM geodata.relevo a, geodata.estado e
+		WHERE st_contains(e.geom, st_transform(a.geom, 4674))
+		AND e.sigla = 'MG') as d,
+		(	SELECT st_union(st_buffer(b.geom::geography, 100000)::geometry) as geom
+					FROM geodata.barragem b
+					WHERE codigo_snisb = '621') as buf
+WHERE st_contains(buf.geom, d.geom)
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+SELECT d.*
+FROM (	SELECT a.*
+		FROM geodata.processos_minerarios_ativos a, geodata.estado e
+		WHERE st_contains(e.geom, st_transform(a.geom, 4674))
+		AND e.sigla = 'MG') as d,
+		(	SELECT st_union(st_buffer(b.geom::geography, 10000)::geometry) as geom
+					FROM geodata.barragem b
+					WHERE codigo_snisb = '621') as buf
+WHERE st_contains(buf.geom, d.geom)
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+SELECT d.*
+FROM (	SELECT a.*
+		FROM geodata.curso_dagua_mg a, geodata.estado e
+		WHERE st_contains(e.geom, st_transform(a.geom, 4674))
+		AND e.sigla = 'MG') as d,
+		(	SELECT st_union(st_buffer(b.geom::geography, 100000)::geometry) as geom
+					FROM geodata.barragem b
+					WHERE codigo_snisb = '621') as buf
+WHERE st_Intersects( buf.geom, st_transform(d.geom, 4326))
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+SELECT d.*
+FROM (	SELECT a.*
+		FROM geodata.trecho_energia a, geodata.estado e
+		WHERE st_contains(e.geom, st_transform(a.geom, 4674))
+		AND e.sigla = 'MG') as d,
+		(	SELECT st_union(st_buffer(b.geom::geography, 100000)::geometry) as geom
+					FROM geodata.barragem b
+					WHERE codigo_snisb = '621') as buf
+WHERE st_Intersects( buf.geom, st_transform(d.geom, 4326))
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+SELECT d.*
+FROM (	SELECT a.*
+		FROM geodata.ferrovia_br a, geodata.estado e
+		WHERE st_contains(e.geom, st_transform(a.geom, 4674))
+		AND e.sigla = 'MG') as d,
+		(	SELECT st_union(st_buffer(b.geom::geography, 100000)::geometry) as geom
+					FROM geodata.barragem b
+					WHERE codigo_snisb = '621') as buf
+WHERE st_Intersects( buf.geom, st_transform(d.geom, 4326))
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+SELECT d.*
+FROM (	SELECT a.*
+		FROM geodata.pista_pouso_mg a, geodata.estado e
+		WHERE st_contains(e.geom, st_transform(a.geom, 4674))
+		AND e.sigla = 'MG') as d,
+		(	SELECT st_union(st_buffer(b.geom::geography, 1000000)::geometry) as geom
+					FROM geodata.barragem b
+					WHERE codigo_snisb = '621') as buf
+WHERE st_Intersects( buf.geom, d.geom)
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+SELECT d.*
+FROM (	SELECT a.*
+		FROM geodata.rodovia_br a, geodata.estado e
+		WHERE st_contains(e.geom, st_transform(a.geom, 4674))
+		AND e.sigla = 'MG') as d,
+		(	SELECT st_union(st_buffer(b.geom::geography, 100000)::geometry) as geom
+					FROM geodata.barragem b
+					WHERE codigo_snisb = '621') as buf
+WHERE st_Intersects( buf.geom, st_transform(d.geom, 4326))
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+SELECT d.*
+FROM (	SELECT a.*
+		FROM geodata.via_deslocamento a, geodata.estado e
+		WHERE st_contains(e.geom, st_transform(a.geom, 4674))
+		AND e.sigla = 'MG') as d,
+		(	SELECT st_union(st_buffer(b.geom::geography, 100000)::geometry) as geom
+					FROM geodata.barragem b
+					WHERE codigo_snisb = '621') as buf
+WHERE st_Intersects( buf.geom, st_transform(d.geom, 4326))
